@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
-* Студент: [Александра Бубнова](https://up.htmlacademy.ru/javascript/27/user/2073541).
-* Наставник: `Неизвестно`.
+- Студент: [Александра Бубнова](https://up.htmlacademy.ru/javascript/27/user/2073541).
+- Наставник: [Никита Сигов](https://htmlacademy.ru/profile/crazer)
 
 ---
 
