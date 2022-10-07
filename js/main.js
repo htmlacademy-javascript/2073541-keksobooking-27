@@ -71,7 +71,7 @@ getRandomAvatar();
 
 const createAdvert = () => ({
   author: {
-    avatar: `img/avatars/user${getRandomAvatar()}.png`,
+    avatar: getRandomAvatar(),
   },
   offer: {
     title: TITLES[getRandomInt(0, TITLES.length - 1)],
