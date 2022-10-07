@@ -59,12 +59,19 @@ function getRandomArrayElements(array) {
   return shuffledArray.slice(0, getRandomInt(1, array.length));
 }
 
-//function getRandomAvatar...
+function getRandomAvatar(){
+  const number = getRandomInt(1, SIMILAR_ADS_COUNT);
+  if (number < 10) {
+    return`img/avatars/user0${number}.png`;
+  }
+  return`img/avatars/user${number}.png`;
+}
+getRandomAvatar();
 
 
 const createAdvert = () => ({
   author: {
-    avatar: `img/avatars/user${getRandomInt(1, SIMILAR_ADS_COUNT)}.png`,
+    avatar: `img/avatars/user${getRandomAvatar()}.png`,
   },
   offer: {
     title: TITLES[getRandomInt(0, TITLES.length - 1)],
@@ -85,4 +92,5 @@ const createAdvert = () => ({
   },
 });
 const similarAdverts = Array.from({length: SIMILAR_ADS_COUNT}, createAdvert);
-console.log(similarAdverts);
+//console.log(similarAdverts);
+//console.log(getRandomArrayElements(FEATURES))
