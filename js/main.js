@@ -30,6 +30,7 @@ const DESCRIPTIONS = [
   'Номер с террасой',
 ];
 
+
 function getRandomInt(min, max) {
   if (max < 0 || min < 0) {
     return NaN;
@@ -59,19 +60,10 @@ function getRandomArrayElements(array) {
   return shuffledArray.slice(0, getRandomInt(1, array.length));
 }
 
-function getRandomAvatar(){
-  const number = getRandomInt(1, SIMILAR_ADS_COUNT);
-  if (number < 10) {
-    return`img/avatars/user0${number}.png`;
-  }
-  return`img/avatars/user${number}.png`;
-}
-getRandomAvatar();
 
-
-const createAdvert = () => ({
+const createAdvert = (_,idx) => ({
   author: {
-    avatar: `img/avatars/user${getRandomAvatar()}.png`,
+    avatar: `img/avatars/user${idx < (SIMILAR_ADS_COUNT - 1) ? `0${ idx + 1}` : idx + 1}.png`,
   },
   offer: {
     title: TITLES[getRandomInt(0, TITLES.length - 1)],
@@ -92,5 +84,3 @@ const createAdvert = () => ({
   },
 });
 const similarAdverts = Array.from({length: SIMILAR_ADS_COUNT}, createAdvert);
-//console.log(similarAdverts);
-//console.log(getRandomArrayElements(FEATURES))
