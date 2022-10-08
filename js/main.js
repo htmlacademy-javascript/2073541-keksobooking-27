@@ -84,3 +84,4 @@ const createAdvert = (_,idx) => ({
   },
 });
 const getSimilarAdverts = Array.from({length: SIMILAR_ADS_COUNT}, createAdvert);
+getSimilarAdverts();
