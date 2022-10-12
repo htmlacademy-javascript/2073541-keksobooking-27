@@ -54,7 +54,7 @@ const createAdvert = (_,idx) => ({
     lng: getRandomFloat(139.7, 139.8),
   },
 });
-const getSimilarAdverts = Array.from({length: SIMILAR_ADS_COUNT}, createAdvert);
-getSimilarAdverts();
+const getSimilarAdverts = () => Array.from({length: SIMILAR_ADS_COUNT}, createAdvert);
+
 export {getSimilarAdverts};
 
