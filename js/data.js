@@ -31,10 +31,20 @@ const DESCRIPTIONS = [
   'Номер с террасой',
 ];
 
+const getUniqueAvatarNumber = () => {
+  let number = getRandomInt(0, SIMILAR_ADS_COUNT);
+  for (let i = 1; i <= SIMILAR_ADS_COUNT; i++) {
+    number += 1;
+    if (number < 10) {
+      return`img/avatars/user0${number}.png`;
+    }
+    return`img/avatars/user${number}.png`;
+  }
+};
 
-const createAdvert = (_,idx) => ({
+const createAdvert = () => ({
   author: {
-    avatar: `img/avatars/user${idx < (SIMILAR_ADS_COUNT - 1) ? `0${ idx + 1}` : idx + 1}.png`,
+    avatar: getUniqueAvatarNumber(),
   },
   offer: {
     title: TITLES[getRandomInt(0, TITLES.length - 1)],

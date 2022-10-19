@@ -1,2 +1,1 @@
-import {getSimilarAdverts} from './data.js';
-getSimilarAdverts();
+import './card.js';
