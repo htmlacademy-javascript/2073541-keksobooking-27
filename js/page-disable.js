@@ -18,7 +18,7 @@ const activateElements = (container) => {
 
 const disablePage = () => {
   offerForm.classList.add('ad-form--disabled');
-  mapForm.classList.add('ad-form--disabled');
+  mapForm.classList.add('map__filters--disabled');
   disableElements(offerFormItems);
   disableElements(mapFormSelects);
   disableElements(mapFormFieldsets);
