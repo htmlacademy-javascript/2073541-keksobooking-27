@@ -21,6 +21,10 @@ const roomsOptionMap = {
   100: [0]
 };
 
+typeOfHouse.addEventListener('change', () => {
+  price.placeholder = minPricesMap[typeOfHouse.value];
+});
+
 const pristine = new Pristine(form , {
   classTo: 'ad-form__element',
   errorClass: 'ad-form__element--invalid',
