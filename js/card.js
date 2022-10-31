@@ -1,4 +1,3 @@
-import {getSimilarAdverts} from './data.js';
 
 const OFFER_TYPES = {
   flat: 'Квартира',
