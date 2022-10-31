@@ -25,6 +25,7 @@ typeOfHouse.addEventListener('change', () => {
   price.placeholder = minPricesMap[typeOfHouse.value];
 });
 
+
 const pristine = new Pristine(form , {
   classTo: 'ad-form__element',
   errorClass: 'ad-form__element--invalid',
@@ -102,4 +103,4 @@ form.addEventListener('submit', (evt) => {
   }
 });
 
-export { validate };
+export { validate, minPricesMap, typeOfHouse, price, pristine };
