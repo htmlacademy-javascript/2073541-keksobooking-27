@@ -1,6 +1,8 @@
 import { activatePage } from './page-disable.js';
-import {getSimilarAdverts} from './data.js';
-import { createCard} from './card.js';
+import { getSimilarAdverts } from './data.js';
+import { createCard } from './card.js';
+
+const addressField = document.querySelector('#address');
 
 const MAIN_PIN = L.icon({
   iconUrl: 'img/main-pin.svg',
@@ -12,14 +14,14 @@ const PIN = L.icon({
   iconSize: [40, 40],
   iconAnchor: [20, 40]
 });
-
-const addressField = document.querySelector('#address');
+const coordinates = {
+  lat: 35.68948,
+  lng: 139.69170,
+};
+addressField.value = `${coordinates.lat}, ${coordinates.lng}`;
 
 const map = L.map('map-canvas')
-  .setView({
-    lat: 35.68948,
-    lng: 139.69170,
-  }, 12);
+  .setView(coordinates, 12);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
@@ -29,24 +31,21 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 
 map.on('load', activatePage(true));
 
+
 const mainMarker = L.marker(
-  {
-    lat: 35.68948,
-    lng: 139.69170,
-  },
+  coordinates,
   {
     draggable: true,
     icon: MAIN_PIN
   }
 ).addTo(map);
 
-addressField.value = `lat: ${mainMarker.getLatLng().lat} lng: ${mainMarker.getLatLng().lng}`;
 
 mainMarker.on('moveend', (evt) => {
-  const coordinates = evt.target.getLatLng();
-  const latitude = coordinates.lat.toFixed(5);
-  const longitude = coordinates.lng.toFixed(5);
-  addressField.value = `lat: ${latitude} lng: ${longitude}`;
+  const address = evt.target.getLatLng();
+  const latitude = address.lat.toFixed(5);
+  const longitude = address.lng.toFixed(5);
+  addressField.value = `${latitude}, ${longitude}`;
 });
 const markerGroup = L.layerGroup().addTo(map);
 const createMarker = (advert) => {

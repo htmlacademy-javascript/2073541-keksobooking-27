@@ -4,13 +4,17 @@ const sliderElement = form.querySelector('.ad-form__slider');
 const setPricePlaceholder = () => {
   price.placeholder = minPricesMap[typeOfHouse.value];
 };
+setPricePlaceholder();
 
+typeOfHouse.addEventListener('change', () => {
+  setPricePlaceholder();
+});
 noUiSlider.create(sliderElement, {
   range: {
     min: 0,
     max: 100000,
   },
-  start: +minPricesMap[typeOfHouse.value],
+  start: [price.placeholder],
   step: 1,
   connect: 'lower',
   format: {
@@ -25,10 +29,8 @@ sliderElement.noUiSlider.on('slide', () => {
   pristine.validate(price);
 });
 
-price.addEventListener('change', () => {
+price.addEventListener('input', () => {
   sliderElement.noUiSlider.set(price.value);
 });
 
-typeOfHouse.addEventListener('change', () => {
-  setPricePlaceholder();
-});
+

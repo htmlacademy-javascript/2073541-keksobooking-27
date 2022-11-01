@@ -16,13 +16,13 @@ const activatePage = (boolean) => {
     mapForm.classList.add('map__filters--disabled');
   } else {
     offerForm.classList.remove('ad-form--disabled');
-    mapForm.classList.remove('ad-form--disabled');
+    mapForm.classList.remove('map__filters--disabled');
   }
 
   activateElements(offerFormItems, boolean);
   activateElements(mapFormSelects, boolean);
   activateElements(mapFormFieldsets, boolean);
 };
-
+activatePage(false);
 
 export { activatePage };
