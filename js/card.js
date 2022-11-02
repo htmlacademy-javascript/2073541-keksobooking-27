@@ -1,4 +1,3 @@
-import {getSimilarAdverts} from './data.js';
 
 const OFFER_TYPES = {
   flat: 'Квартира',
@@ -9,7 +8,6 @@ const OFFER_TYPES = {
 };
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const offers = getSimilarAdverts();
 
 const getOfferFeatures = (items, container) => {
   if (!items) {
@@ -76,8 +74,4 @@ const createCard = (item) => {
   return card;
 };
 
-
-const mapCanvas = document.querySelector('#map-canvas');
-mapCanvas.appendChild(createCard(offers[0]));
-
-
+export { createCard};

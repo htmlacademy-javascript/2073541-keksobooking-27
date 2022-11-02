@@ -31,20 +31,10 @@ const DESCRIPTIONS = [
   'Номер с террасой',
 ];
 
-const getUniqueAvatarNumber = () => {
-  let number = getRandomInt(0, SIMILAR_ADS_COUNT);
-  for (let i = 1; i <= SIMILAR_ADS_COUNT; i++) {
-    number += 1;
-    if (number < 10) {
-      return`img/avatars/user0${number}.png`;
-    }
-    return`img/avatars/user${number}.png`;
-  }
-};
 
-const createAdvert = () => ({
+const createAdvert = (idx) => ({
   author: {
-    avatar: getUniqueAvatarNumber(),
+    avatar: `img/avatars/user${idx < 9 ? '0' : ''}${idx + 1}.png`,
   },
   offer: {
     title: TITLES[getRandomInt(0, TITLES.length - 1)],
@@ -64,7 +54,7 @@ const createAdvert = () => ({
     lng: getRandomFloat(139.7, 139.8),
   },
 });
-const getSimilarAdverts = () => Array.from({length: SIMILAR_ADS_COUNT}, createAdvert);
+const getSimilarAdverts = () => Array.from({length: SIMILAR_ADS_COUNT},(_, idx) => createAdvert(idx));
 
 export {getSimilarAdverts};
 
