@@ -30,6 +30,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 ).addTo(map);
 
 map.on('load', activatePage(true));
+const getAddressCoordinates = () => {
+
+}
 
 
 const mainMarker = L.marker(
@@ -68,4 +71,14 @@ for (const advert of adverts) {
   createMarker(advert);
 }
 
+const resetMap = () => {
+  mainMarker.setLatLng(
+    coordinates
+  );
+  map.setView(
+    coordinates,
+    12);
+  addressField.value = `${coordinates.lat}, ${coordinates.lng}`;
+};
 
+export {resetMap};
