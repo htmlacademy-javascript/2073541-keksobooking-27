@@ -1,46 +1,45 @@
 
 const ALERT_SHOW_TIME = 5000;
 const successMessage = document.querySelector('#success').content.querySelector('.success');
-const errorMessage = document.querySelector('#error')
-  .content
-  .querySelector('.error');
+const errorMessage = document.querySelector('#error').content.querySelector('.error');
 
-const errorButton = document.querySelector('.error__button');
+
+const onErrorButtonClick = () => {
+  hideMessage();
+};
+const onMessageEcsKeydown = (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    hideMessage();
+  }
+};
+const onOverLayClick = () => {
+  hideMessage();
+};
 
 const getSuccessMessage = () => {
   const message = successMessage.cloneNode(true);
   document.body.append(message);
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      evt.preventDefault();
-      message.remove();
-    }
-  });
-  document.addEventListener('click', () => {
-    message.remove();
-  });
-
+  document.addEventListener('keydown', onMessageEcsKeydown);
+  document.addEventListener('click', onOverLayClick);
 };
+
+function hideMessage() {
+  const message = document.querySelector('.success') || document.querySelector('.error');
+  message.remove();
+  document.removeEventListener('keydown', onMessageEcsKeydown);
+  document.removeEventListener('click', onOverLayClick);
+}
 
 const getErrorMessage = () => {
   const message = errorMessage.cloneNode(true);
   document.body.append(message);
-
-  /*   errorButton.addEventListener('click', () => {
-    message.remove();
-  }); */
-
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      evt.preventDefault();
-      message.remove();
-    }
-  });
-  document.addEventListener('click', () => {
-    message.remove();
-  });
-
+  document.addEventListener('keydown', onMessageEcsKeydown);
+  const errorButton = document.querySelector('.error__button');
+  errorButton.addEventListener('click', onErrorButtonClick);
 };
+
+
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';

@@ -2,6 +2,7 @@ import { sendData } from './api.js';
 import {resetMap} from './map.js';
 import { getErrorMessage, getSuccessMessage} from './form-message.js';
 import { pristine } from './validate.js';
+import {setSlider} from './price-slider.js';
 
 const mapForm = document.querySelector('.map__filters');
 const form = document.querySelector('.ad-form');
@@ -21,8 +22,9 @@ const setDefaultState = () => {
   form.reset();
   mapForm.reset();
   resetMap();
+  setSlider();
 };
-const errorButton = document.querySelector('.error__button');
+
 const onSendSuccess = () => {
   getSuccessMessage();
   unblockSubmitButton();
