@@ -17,11 +17,6 @@ const getData = (onSuccess, onFail) => {
     });
 };
 
-
-
-
-
-
 const sendData = (onSuccess, onFail, body) => {
   fetch(
     serverURL,
@@ -38,6 +33,7 @@ const sendData = (onSuccess, onFail, body) => {
       }
     })
     .catch(() => {
+
       onFail();
     });
 };

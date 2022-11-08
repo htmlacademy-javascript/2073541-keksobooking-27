@@ -25,13 +25,10 @@ const getRandomArrayElements = (array) => {
   return shuffledArray.slice(0, getRandomInt(1, array.length));
 };
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
-
 
 export {
   getRandomInt,
   getRandomFloat,
   getRandomElement,
   getRandomArrayElements,
-  isEscapeKey
 };
