@@ -1,4 +1,4 @@
-import { activatePage } from './page-disable.js';
+import { activatePage, activateElements } from './page-disable.js';
 import { createCard } from './card.js';
 import {getData} from './api.js';
 import { showAlert } from './form-message.js';
@@ -62,7 +62,13 @@ const onDataLoad = (offers) => {
   createMarkers(offers.slice(0, 10));
 };
 const onDataFailed = () => {
+  const mapForm = document.querySelector('.map__filters');
+  const mapFormSelects = mapForm.querySelectorAll('select');
+  const mapFormFieldsets = mapForm.querySelectorAll('fieldset');
+  mapForm.classList.add('map__filters--disabled');
   showAlert('Не удалось загрузить объявления. Попробуйте ещё раз');
+  activateElements(mapFormSelects, false);
+  activateElements(mapFormFieldsets, false);
 };
 
 const getMap = () => {

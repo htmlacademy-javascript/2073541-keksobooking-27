@@ -25,4 +25,4 @@ const activatePage = (boolean) => {
 };
 activatePage(false);
 
-export { activatePage };
+export { activatePage, activateElements};
