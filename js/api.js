@@ -9,8 +9,8 @@ const getData = (onSuccess, onFail) => {
         return response.json();
       }
     })
-    .then((response) => {
-      onSuccess(response);
+    .then((offers) => {
+      onSuccess(offers);
     })
     .catch(() => {
       onFail();

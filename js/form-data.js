@@ -23,6 +23,7 @@ const setDefaultState = () => {
   mapForm.reset();
   resetMap();
   setSlider();
+  pristine.reset();
 };
 
 const onSendSuccess = () => {

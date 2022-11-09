@@ -58,6 +58,13 @@ const createMarkers = (adverts) => {
     marker.bindPopup(createCard(advert));
   });};
 
+const onDataLoad = (offers) => {
+  createMarkers(offers.slice(0, 10));
+};
+const onDataFailed = () => {
+  showAlert('Не удалось загрузить объявления. Попробуйте ещё раз');
+};
+
 const getMap = () => {
   map.setView(coordinates, 12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -67,10 +74,10 @@ const getMap = () => {
   ).addTo(map);
   map.on('load', activatePage(true));
 
-  getData((data) => {
-    createMarkers(data.slice(0, 10));
-  }, () => showAlert('Не удалось загрузить объявления. Попробуйте ещё раз'));
+
+  getData(onDataLoad, onDataFailed);
 };
+
 
 const resetMap = () => {
   mainMarker.setLatLng(
