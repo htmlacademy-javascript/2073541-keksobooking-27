@@ -25,10 +25,19 @@ const getRandomArrayElements = (array) => {
   return shuffledArray.slice(0, getRandomInt(1, array.length));
 };
 
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
 
 export {
   getRandomInt,
   getRandomFloat,
   getRandomElement,
   getRandomArrayElements,
+  debounce
 };

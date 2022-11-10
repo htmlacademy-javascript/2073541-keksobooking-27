@@ -1,7 +1,9 @@
 import { activatePage, activateElements } from './page-disable.js';
 import { createCard } from './card.js';
 import {getData} from './api.js';
-import { showAlert } from './form-message.js';
+import { showAlert } from './user-message.js';
+import {filterOffers, onFiltersChange} from './map-filters.js';
+import { debounce } from './util.js';
 
 const addressField = document.querySelector('#address');
 
@@ -58,9 +60,11 @@ const createMarkers = (adverts) => {
     marker.bindPopup(createCard(advert));
   });};
 
-const onDataLoad = (offers) => {
-  createMarkers(offers.slice(0, 10));
+const onDataLoad = (data) => {
+  const filteredOffers = filterOffers(data);
+  createMarkers(filteredOffers.slice(0, 10));
 };
+
 const onDataFailed = () => {
   const mapForm = document.querySelector('.map__filters');
   const mapFormSelects = mapForm.querySelectorAll('select');
@@ -80,8 +84,11 @@ const getMap = () => {
   ).addTo(map);
   map.on('load', activatePage(true));
 
-
   getData(onDataLoad, onDataFailed);
+  onFiltersChange(debounce(() => {
+    markerGroup.clearLayers();
+    getData(onDataLoad, onDataFailed);
+  }));
 };
 
 
@@ -94,6 +101,7 @@ const resetMap = () => {
     12);
   setAddressValue();
   map.closePopup();
+  getData(onDataLoad, onDataFailed);
 };
 
 export {resetMap, getMap};
