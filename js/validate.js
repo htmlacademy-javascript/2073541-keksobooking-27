@@ -1,3 +1,4 @@
+
 const form = document.querySelector('.ad-form');
 const typeOfHouse = form.querySelector('#type');
 const price = form.querySelector('#price');
@@ -92,11 +93,5 @@ const validate = () => {
 
 };
 
-
-form.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
-  }
-});
 
 export { validate, minPricesMap, typeOfHouse, price, pristine };

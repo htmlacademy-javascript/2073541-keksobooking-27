@@ -9,6 +9,7 @@ setPricePlaceholder();
 typeOfHouse.addEventListener('change', () => {
   setPricePlaceholder();
 });
+
 noUiSlider.create(sliderElement, {
   range: {
     min: 0,
@@ -22,6 +23,9 @@ noUiSlider.create(sliderElement, {
     from: (value) => +value
   }
 });
+const setSlider = () => {
+  sliderElement.noUiSlider.set(price.value);
+};
 
 
 sliderElement.noUiSlider.on('slide', () => {
@@ -29,8 +33,6 @@ sliderElement.noUiSlider.on('slide', () => {
   pristine.validate(price);
 });
 
-price.addEventListener('input', () => {
-  sliderElement.noUiSlider.set(price.value);
-});
+price.addEventListener('input', setSlider);
 
-
+export {setSlider};

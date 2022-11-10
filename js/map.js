@@ -1,6 +1,7 @@
 import { activatePage } from './page-disable.js';
-import { getSimilarAdverts } from './data.js';
 import { createCard } from './card.js';
+import {getData} from './api.js';
+import { showAlert } from './form-message.js';
 
 const addressField = document.querySelector('#address');
 
@@ -18,19 +19,11 @@ const coordinates = {
   lat: 35.68948,
   lng: 139.69170,
 };
-addressField.value = `${coordinates.lat}, ${coordinates.lng}`;
-
-const map = L.map('map-canvas')
-  .setView(coordinates, 12);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
-
-map.on('load', activatePage(true));
-
+const setAddressValue = () => {
+  addressField.value = `${coordinates.lat}, ${coordinates.lng}`;
+};
+setAddressValue();
+const map = L.map('map-canvas');
 
 const mainMarker = L.marker(
   coordinates,
@@ -48,24 +41,53 @@ mainMarker.on('moveend', (evt) => {
   addressField.value = `${latitude}, ${longitude}`;
 });
 const markerGroup = L.layerGroup().addTo(map);
-const createMarker = (advert) => {
-  const marker = L.marker(
-    {
-      lat: advert.location.lat,
-      lng: advert.location.lng,
-    },
-    {
-      draggable: false,
-      icon: PIN
-    }
-  );
-  marker.addTo(markerGroup);
-  marker.bindPopup(createCard(advert));
+
+const createMarkers = (adverts) => {
+  adverts.forEach((advert) => {
+    const marker = L.marker(
+      {
+        lat: advert.location.lat,
+        lng: advert.location.lng,
+      },
+      {
+        draggable: false,
+        icon: PIN
+      }
+    );
+    marker.addTo(markerGroup);
+    marker.bindPopup(createCard(advert));
+  });};
+
+const onDataLoad = (offers) => {
+  createMarkers(offers.slice(0, 10));
+};
+const onDataFailed = () => {
+  showAlert('Не удалось загрузить объявления. Попробуйте ещё раз');
 };
 
-const adverts = getSimilarAdverts();
-for (const advert of adverts) {
-  createMarker(advert);
-}
+const getMap = () => {
+  map.setView(coordinates, 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+  map.on('load', activatePage(true));
 
 
+  getData(onDataLoad, onDataFailed);
+};
+
+
+const resetMap = () => {
+  mainMarker.setLatLng(
+    coordinates
+  );
+  map.setView(
+    coordinates,
+    12);
+  setAddressValue();
+  map.closePopup();
+};
+
+export {resetMap, getMap};
