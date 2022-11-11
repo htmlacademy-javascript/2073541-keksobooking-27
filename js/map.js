@@ -86,6 +86,16 @@ const onDataFailed = () => {
 };
 
 
+const setFilteredMarkers = () => {
+  getData((offers) => {
+    onDataLoad(offers);
+    onFiltersChange(debounce(() => {
+      markerGroup.clearLayers();
+      onDataLoad(offers);
+    }));
+  }, onDataFailed);
+};
+
 const getMap = () => {
   map.setView(coordinates, 12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -94,14 +104,7 @@ const getMap = () => {
     },
   ).addTo(map);
   map.on('load', activatePage(true));
-
-  getData((offers) => {
-    onDataLoad(offers);
-    onFiltersChange(debounce(() => {
-      markerGroup.clearLayers();
-      onDataLoad(offers);
-    }));
-  }, onDataFailed);
+  setFilteredMarkers();
 };
 
 
