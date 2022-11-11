@@ -42,6 +42,16 @@ mainMarker.on('moveend', (evt) => {
   const longitude = address.lng.toFixed(5);
   addressField.value = `${latitude}, ${longitude}`;
 });
+const setMainMarker = () => {
+
+  mainMarker.setLatLng(
+    coordinates
+  );
+  map.setView(
+    coordinates,
+    12);
+};
+
 const markerGroup = L.layerGroup().addTo(map);
 
 const createMarkers = (adverts) => {
@@ -75,6 +85,7 @@ const onDataFailed = () => {
   activateElements(mapFormFieldsets, false);
 };
 
+
 const getMap = () => {
   map.setView(coordinates, 12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -84,23 +95,21 @@ const getMap = () => {
   ).addTo(map);
   map.on('load', activatePage(true));
 
-  getData(onDataLoad, onDataFailed);
-  onFiltersChange(debounce(() => {
-    markerGroup.clearLayers();
-    getData(onDataLoad, onDataFailed);
-  }));
+  getData((offers) => {
+    onDataLoad(offers);
+    onFiltersChange(debounce(() => {
+      markerGroup.clearLayers();
+      onDataLoad(offers);
+    }));
+  }, onDataFailed);
 };
 
 
 const resetMap = () => {
-  mainMarker.setLatLng(
-    coordinates
-  );
-  map.setView(
-    coordinates,
-    12);
+  setMainMarker();
   setAddressValue();
   map.closePopup();
+  markerGroup.clearLayers();
   getData(onDataLoad, onDataFailed);
 };
 

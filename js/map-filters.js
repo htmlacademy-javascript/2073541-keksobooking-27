@@ -44,7 +44,7 @@ const getOffersRank = (first, second) => {
 const filterOffers = (offers) => {
   const filteredOffers = offers.filter((value) => checkTypeFilter(value) && checkPriceFilter(value) && checkroomsFilter(value) && checkguestsFilter(value) && checkFeaturesFilter(value));
 
-  return filteredOffers.sort(getOffersRank);
+  return filteredOffers.slice().sort(getOffersRank);
 };
 
 
