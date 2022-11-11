@@ -85,6 +85,15 @@ const onDataFailed = () => {
   activateElements(mapFormFieldsets, false);
 };
 
+const setFilteredMarkers = () => {
+  getData((offers) => {
+    onDataLoad(offers);
+    onFiltersChange(debounce(() => {
+      markerGroup.clearLayers();
+      onDataLoad(offers);
+    }));
+  }, onDataFailed);
+};
 
 const getMap = () => {
   map.setView(coordinates, 12);
@@ -94,14 +103,7 @@ const getMap = () => {
     },
   ).addTo(map);
   map.on('load', activatePage(true));
-
-  getData((offers) => {
-    onDataLoad(offers);
-    onFiltersChange(debounce(() => {
-      markerGroup.clearLayers();
-      onDataLoad(offers);
-    }));
-  }, onDataFailed);
+  setFilteredMarkers();
 };
 
 
