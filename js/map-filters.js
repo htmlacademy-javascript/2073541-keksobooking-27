@@ -24,8 +24,8 @@ const priceFilterRange = {
 
 const checkTypeFilter = (data) => typeFilter.value === data.offer.type || typeFilter.value === 'any';
 const checkPriceFilter = (data) => (priceFilter.value === 'any') || (data.offer.price > priceFilterRange[priceFilter.value].MIN && data.offer.price < priceFilterRange[priceFilter.value].MAX);
-const checkroomsFilter = (data) => (roomsFilter.value === 'any') || (+roomsFilter.value === data.offer.rooms);
-const checkguestsFilter = (data) => (guestsFilter.value === 'any') || (+guestsFilter.value === data.offer.guests);
+const checkRoomsFilter = (data) => (roomsFilter.value === 'any') || (+roomsFilter.value === data.offer.rooms);
+const checkGuestsFilter = (data) => (guestsFilter.value === 'any') || (+guestsFilter.value === data.offer.guests);
 
 const checkFeaturesFilter = (data) => {
   const checkedFeatures = Array.from(featuresFilter.querySelectorAll('input[type="checkbox"]:checked'));
@@ -42,7 +42,7 @@ const getOffersRank = (first, second) => {
 };
 
 const filterOffers = (offers) => {
-  const filteredOffers = offers.filter((value) => checkTypeFilter(value) && checkPriceFilter(value) && checkroomsFilter(value) && checkguestsFilter(value) && checkFeaturesFilter(value));
+  const filteredOffers = offers.filter((value) => checkTypeFilter(value) && checkPriceFilter(value) && checkRoomsFilter(value) && checkGuestsFilter(value) && checkFeaturesFilter(value));
 
   return filteredOffers.slice().sort(getOffersRank);
 };
