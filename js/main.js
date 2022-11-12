@@ -6,6 +6,7 @@ validate();
 import {getMap} from './map.js';
 import './price-slider.js';
 import './api.js';
-import './form-data.js';
+import './user-form.js';
 getMap();
+import './map-filters.js';
 

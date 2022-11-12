@@ -1,7 +1,9 @@
-import { activatePage } from './page-disable.js';
+import { activatePage, activateElements } from './page-disable.js';
 import { createCard } from './card.js';
 import {getData} from './api.js';
-import { showAlert } from './form-message.js';
+import { showAlert } from './user-message.js';
+import {filterOffers, onFiltersChange} from './map-filters.js';
+import { debounce } from './util.js';
 
 const addressField = document.querySelector('#address');
 
@@ -40,6 +42,16 @@ mainMarker.on('moveend', (evt) => {
   const longitude = address.lng.toFixed(5);
   addressField.value = `${latitude}, ${longitude}`;
 });
+const setMainMarker = () => {
+
+  mainMarker.setLatLng(
+    coordinates
+  );
+  map.setView(
+    coordinates,
+    12);
+};
+
 const markerGroup = L.layerGroup().addTo(map);
 
 const createMarkers = (adverts) => {
@@ -58,11 +70,30 @@ const createMarkers = (adverts) => {
     marker.bindPopup(createCard(advert));
   });};
 
-const onDataLoad = (offers) => {
-  createMarkers(offers.slice(0, 10));
+const onDataLoad = (data) => {
+  const filteredOffers = filterOffers(data);
+  createMarkers(filteredOffers.slice(0, 10));
 };
+
 const onDataFailed = () => {
+  const mapForm = document.querySelector('.map__filters');
+  const mapFormSelects = mapForm.querySelectorAll('select');
+  const mapFormFieldsets = mapForm.querySelectorAll('fieldset');
+  mapForm.classList.add('map__filters--disabled');
   showAlert('Не удалось загрузить объявления. Попробуйте ещё раз');
+  activateElements(mapFormSelects, false);
+  activateElements(mapFormFieldsets, false);
+};
+
+
+const setFilteredMarkers = () => {
+  getData((offers) => {
+    onDataLoad(offers);
+    onFiltersChange(debounce(() => {
+      markerGroup.clearLayers();
+      onDataLoad(offers);
+    }));
+  }, onDataFailed);
 };
 
 const getMap = () => {
@@ -73,21 +104,16 @@ const getMap = () => {
     },
   ).addTo(map);
   map.on('load', activatePage(true));
-
-
-  getData(onDataLoad, onDataFailed);
+  setFilteredMarkers();
 };
 
 
 const resetMap = () => {
-  mainMarker.setLatLng(
-    coordinates
-  );
-  map.setView(
-    coordinates,
-    12);
+  setMainMarker();
   setAddressValue();
   map.closePopup();
+  markerGroup.clearLayers();
+  getData(onDataLoad, onDataFailed);
 };
 
 export {resetMap, getMap};

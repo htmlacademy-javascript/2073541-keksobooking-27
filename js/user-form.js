@@ -1,6 +1,6 @@
 import { sendData } from './api.js';
 import {resetMap} from './map.js';
-import { getErrorMessage, getSuccessMessage} from './form-message.js';
+import { getErrorMessage, getSuccessMessage} from './user-message.js';
 import { pristine } from './validate.js';
 import {setSlider} from './price-slider.js';
 

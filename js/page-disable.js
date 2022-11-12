@@ -1,8 +1,8 @@
 const offerForm = document.querySelector('.ad-form');
 const offerFormItems = offerForm.querySelectorAll('fieldset');
-const mapForm = document.querySelector('.map__filters');
-const mapFormSelects = mapForm.querySelectorAll('select');
-const mapFormFieldsets = mapForm.querySelectorAll('fieldset');
+const filterForm = document.querySelector('.map__filters');
+const filterFormSelects = filterForm.querySelectorAll('select');
+const filterFormFieldsets = filterForm.querySelectorAll('fieldset');
 
 const activateElements = (container, boolean) => {
   container.forEach((item) => {
@@ -13,16 +13,16 @@ const activateElements = (container, boolean) => {
 const activatePage = (boolean) => {
   if (!boolean) {
     offerForm.classList.add('ad-form--disabled');
-    mapForm.classList.add('map__filters--disabled');
+    filterForm.classList.add('map__filters--disabled');
   } else {
     offerForm.classList.remove('ad-form--disabled');
-    mapForm.classList.remove('map__filters--disabled');
+    filterForm.classList.remove('map__filters--disabled');
   }
 
   activateElements(offerFormItems, boolean);
-  activateElements(mapFormSelects, boolean);
-  activateElements(mapFormFieldsets, boolean);
+  activateElements(filterFormSelects, boolean);
+  activateElements(filterFormFieldsets, boolean);
 };
 activatePage(false);
 
-export { activatePage };
+export { activatePage, activateElements};
