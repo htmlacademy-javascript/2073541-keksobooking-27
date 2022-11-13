@@ -3,6 +3,7 @@ import {resetMap} from './map.js';
 import { getErrorMessage, getSuccessMessage} from './user-message.js';
 import { pristine } from './validate.js';
 import {setSlider} from './price-slider.js';
+import {resetPreview} from './picture-preview.js';
 
 const mapForm = document.querySelector('.map__filters');
 const form = document.querySelector('.ad-form');
@@ -24,6 +25,7 @@ const setDefaultState = () => {
   resetMap();
   setSlider();
   pristine.reset();
+  resetPreview();
 };
 
 const onSendSuccess = () => {
