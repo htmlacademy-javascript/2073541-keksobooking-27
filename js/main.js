@@ -9,4 +9,4 @@ import './api.js';
 import './user-form.js';
 getMap();
 import './map-filters.js';
-
+import './picture-preview.js';

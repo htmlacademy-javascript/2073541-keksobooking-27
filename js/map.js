@@ -85,6 +85,15 @@ const onDataFailed = () => {
   activateElements(mapFormFieldsets, false);
 };
 
+const setFilteredMarkers = () => {
+  getData((offers) => {
+    onDataLoad(offers);
+    onFiltersChange(debounce(() => {
+      markerGroup.clearLayers();
+      onDataLoad(offers);
+    }));
+  }, onDataFailed);
+};
 
 const setFilteredMarkers = () => {
   getData((offers) => {
