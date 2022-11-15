@@ -8,6 +8,8 @@ const guestsField = document.querySelector('#capacity');
 const timeInField = document.querySelector('#timein');
 const timeOutField = document.querySelector('#timeout');
 
+const MAX_PRICE = 100000;
+
 const minPricesMap = {
   'bungalow': 0,
   'flat': 1000,
@@ -45,9 +47,9 @@ const validate = () => {
 
   pristine.addValidator(title, validateTitle, getTitleErrorMessage);
 
-  const validatePrice = (value) => value <= 100000 && value >= minPricesMap[typeOfHouse.value];
+  const validatePrice = (value) => value <= MAX_PRICE && value >= minPricesMap[typeOfHouse.value];
   const getPriceErrorMessage = (value) => {
-    if (value > 100000) {
+    if (value > MAX_PRICE) {
       return 'Максимальная цена 100 000 руб.';
     }
     if (value < minPricesMap[typeOfHouse.value]) {
@@ -60,10 +62,7 @@ const validate = () => {
   const validateRoomCapacity = () => {
     const numberOfRooms = +roomsField.value;
     const numberOfGuests = +guestsField.value;
-    if (roomsOptionMap[numberOfRooms].includes(numberOfGuests)) {
-      return true;
-    }
-    return false;
+    return (roomsOptionMap[numberOfRooms].includes(numberOfGuests));
   };
   const getRoomsErrorMessage = () => {
     const numberOfRooms = roomsField.value;

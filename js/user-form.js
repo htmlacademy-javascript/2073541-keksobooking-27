@@ -1,9 +1,9 @@
 import { sendData } from './api.js';
-import {resetMap} from './map.js';
+import { resetMap } from './map.js';
 import { getErrorMessage, getSuccessMessage} from './user-message.js';
 import { pristine } from './validate.js';
-import {setSlider} from './price-slider.js';
-import {resetPreview} from './picture-preview.js';
+import { setSlider } from './price-slider.js';
+import { resetPreview } from './picture-preview.js';
 
 const mapForm = document.querySelector('.map__filters');
 const form = document.querySelector('.ad-form');
@@ -30,13 +30,10 @@ const setDefaultState = () => {
 
 const onSendSuccess = () => {
   getSuccessMessage();
-  unblockSubmitButton();
   setDefaultState();
 };
 const onSendFail = () => {
   getErrorMessage();
-  unblockSubmitButton();
-
 };
 
 const setUserFormSubmit = (onSuccess) => {
@@ -64,4 +61,4 @@ resetButton.addEventListener('click', (evt) => {
   setDefaultState();
 });
 
-export {onSendFail,onSendSuccess, unblockSubmitButton, blockSubmitButton };
+export { onSendFail,onSendSuccess, unblockSubmitButton, blockSubmitButton };

@@ -1,4 +1,4 @@
-import {minPricesMap, typeOfHouse, price, pristine} from './validate.js';
+import { minPricesMap, typeOfHouse, price, pristine } from './validate.js';
 const form = document.querySelector('.ad-form');
 const sliderElement = form.querySelector('.ad-form__slider');
 const setPricePlaceholder = () => {
