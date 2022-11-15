@@ -1,11 +1,14 @@
 import { activatePage, activateElements } from './page-disable.js';
 import { createCard } from './card.js';
-import {getData} from './api.js';
+import { getData } from './api.js';
 import { showAlert } from './user-message.js';
-import {filterOffers, onFiltersChange} from './map-filters.js';
+import { getFilteredOffers, onFiltersChange } from './map-filters.js';
 import { debounce } from './util.js';
 
 const addressField = document.querySelector('#address');
+const mapForm = document.querySelector('.map__filters');
+const mapFormSelects = mapForm.querySelectorAll('select');
+const mapFormFieldsets = mapForm.querySelectorAll('fieldset');
 
 const MAIN_PIN = L.icon({
   iconUrl: 'img/main-pin.svg',
@@ -70,37 +73,27 @@ const createMarkers = (adverts) => {
     marker.bindPopup(createCard(advert));
   });};
 
+
 const onDataLoad = (data) => {
-  const filteredOffers = filterOffers(data);
-  createMarkers(filteredOffers.slice(0, 10));
+  createMarkers(getFilteredOffers(data));
+
+  activateElements(mapFormSelects, true);
+  activateElements(mapFormFieldsets, true);
 };
 
 const onDataFailed = () => {
-  const mapForm = document.querySelector('.map__filters');
-  const mapFormSelects = mapForm.querySelectorAll('select');
-  const mapFormFieldsets = mapForm.querySelectorAll('fieldset');
-  mapForm.classList.add('map__filters--disabled');
   showAlert('Не удалось загрузить объявления. Попробуйте ещё раз');
+
   activateElements(mapFormSelects, false);
   activateElements(mapFormFieldsets, false);
 };
 
 const setFilteredMarkers = () => {
   getData((offers) => {
-    onDataLoad(offers);
+    createMarkers(getFilteredOffers(offers));
     onFiltersChange(debounce(() => {
       markerGroup.clearLayers();
-      onDataLoad(offers);
-    }));
-  }, onDataFailed);
-};
-
-const setFilteredMarkers = () => {
-  getData((offers) => {
-    onDataLoad(offers);
-    onFiltersChange(debounce(() => {
-      markerGroup.clearLayers();
-      onDataLoad(offers);
+      createMarkers(getFilteredOffers(offers));
     }));
   }, onDataFailed);
 };
@@ -125,4 +118,4 @@ const resetMap = () => {
   getData(onDataLoad, onDataFailed);
 };
 
-export {resetMap, getMap};
+export { resetMap, getMap };

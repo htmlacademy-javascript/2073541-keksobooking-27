@@ -24,6 +24,7 @@ const getOfferFeatures = (items, container) => {
     container.appendChild(fragment);
   }
 };
+
 const getOfferPhotos = (items, container) => {
   if (!items) {
     container.remove();
@@ -41,7 +42,6 @@ const getOfferPhotos = (items, container) => {
     });
     container.appendChild(fragment);
   }
-
 };
 
 const createCard = (item) => {
@@ -74,4 +74,4 @@ const createCard = (item) => {
   return card;
 };
 
-export { createCard};
+export { createCard };
