@@ -10,28 +10,36 @@ const mapForm = document.querySelector('.map__filters');
 const mapFormSelects = mapForm.querySelectorAll('select');
 const mapFormFieldsets = mapForm.querySelectorAll('fieldset');
 
-const MAIN_PIN = L.icon({
-  iconUrl: 'img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
-});
-const PIN = L.icon({
-  iconUrl: './img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
-const coordinates = {
+const START_COORDINATES = {
   lat: 35.68948,
   lng: 139.69170,
 };
+
+const MAIN_ICON_SIZE = [52, 52];
+const MAIN_ICON_ANCHOR = [26, 52];
+const OFFER_ICON_SIZE = [40, 40];
+const OFFER_ICON_ANCHOR = [20, 40];
+const DEFAULT_ZOOM = 12;
+
+const MAIN_PIN = L.icon({
+  iconUrl: 'img/main-pin.svg',
+  iconSize: MAIN_ICON_SIZE,
+  iconAnchor: MAIN_ICON_ANCHOR
+});
+const PIN = L.icon({
+  iconUrl: './img/pin.svg',
+  iconSize: OFFER_ICON_SIZE,
+  iconAnchor: OFFER_ICON_ANCHOR
+});
+
 const setAddressValue = () => {
-  addressField.value = `${coordinates.lat}, ${coordinates.lng}`;
+  addressField.value = `${START_COORDINATES.lat}, ${START_COORDINATES.lng}`;
 };
 setAddressValue();
 const map = L.map('map-canvas');
 
 const mainMarker = L.marker(
-  coordinates,
+  START_COORDINATES,
   {
     draggable: true,
     icon: MAIN_PIN
@@ -48,11 +56,11 @@ mainMarker.on('moveend', (evt) => {
 const setMainMarker = () => {
 
   mainMarker.setLatLng(
-    coordinates
+    START_COORDINATES
   );
   map.setView(
-    coordinates,
-    12);
+    START_COORDINATES,
+    DEFAULT_ZOOM);
 };
 
 const markerGroup = L.layerGroup().addTo(map);
@@ -99,7 +107,7 @@ const setFilteredMarkers = () => {
 };
 
 const getMap = () => {
-  map.setView(coordinates, 12);
+  map.setView(START_COORDINATES, DEFAULT_ZOOM);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
