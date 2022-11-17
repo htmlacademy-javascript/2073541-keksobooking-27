@@ -1,6 +1,10 @@
 import { minPricesMap, typeOfHouse, price, pristine } from './validate.js';
+
 const form = document.querySelector('.ad-form');
 const sliderElement = form.querySelector('.ad-form__slider');
+
+const PRICE_MIN = 0;
+const PRICE_MAX = 100000;
 const setPricePlaceholder = () => {
   price.placeholder = minPricesMap[typeOfHouse.value];
 };
@@ -12,8 +16,8 @@ typeOfHouse.addEventListener('change', () => {
 
 noUiSlider.create(sliderElement, {
   range: {
-    min: 0,
-    max: 100000,
+    min: PRICE_MIN,
+    max: PRICE_MAX,
   },
   start: [price.placeholder],
   step: 1,
@@ -23,7 +27,7 @@ noUiSlider.create(sliderElement, {
     from: (value) => +value
   }
 });
-const setSlider = () => {
+const priceChangeHandler = () => {
   sliderElement.noUiSlider.set(price.value);
 };
 
@@ -33,6 +37,6 @@ sliderElement.noUiSlider.on('slide', () => {
   pristine.validate(price);
 });
 
-price.addEventListener('input', setSlider);
+price.addEventListener('input', priceChangeHandler);
 
-export {setSlider};
+export { priceChangeHandler };

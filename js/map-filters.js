@@ -8,7 +8,7 @@ const featuresFilter = filterForm.querySelector('#housing-features');
 
 const OFFERS_COUNT = 10;
 
-const PRICE_RANGE = {
+const priceFilterRange = {
   'low': {
     MIN: 0,
     MAX: 10000,
@@ -29,8 +29,8 @@ const checkTypeFilter = (data) => typeFilter.value === ANY || typeFilter.value =
 
 
 const checkPriceFilter = (data) => (priceFilter.value === ANY)
-   || (data.offer.price > PRICE_RANGE[priceFilter.value].MIN
-   && data.offer.price < PRICE_RANGE[priceFilter.value].MAX);
+   || (data.offer.price > priceFilterRange[priceFilter.value].MIN
+   && data.offer.price < priceFilterRange[priceFilter.value].MAX);
 const checkRoomsFilter = (data) => (roomsFilter.value === ANY)
    || (+roomsFilter.value === data.offer.rooms);
 const checkGuestsFilter = (data) => (guestsFilter.value === ANY)

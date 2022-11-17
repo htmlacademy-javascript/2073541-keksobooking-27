@@ -35,8 +35,8 @@ const getOfferPhotos = (items, container) => {
       const element = document.createElement('img');
       element.classList.add('popup__photo');
       element.src = item;
-      element.width = 45;
-      element.height = 40;
+      element.width = '45';
+      element.height = '40';
       element.alt = 'Фотография жилья';
       fragment.appendChild(element);
     });
